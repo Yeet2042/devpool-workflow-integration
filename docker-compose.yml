@@ -11,5 +11,22 @@ services:
       POSTGRES_DB: workflow
     volumes:
       - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d workflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  workflow-api:
+    build:
+      context: ./devpool-workflow-api
+      dockerfile: Dockerfile
+    env_file:
+      - ./devpool-workflow-api/.env
+    ports:
+      - '3000:3000'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
 volumes:
   db-data:
