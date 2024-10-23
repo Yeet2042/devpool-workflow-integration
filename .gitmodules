@@ -1,0 +1,4 @@
+[submodule "devpool-workflow-api"]
+	path = devpool-workflow-api
+	url = https://github.com/Yeet2042/devpool-workflow-api.git
+	branch = main
